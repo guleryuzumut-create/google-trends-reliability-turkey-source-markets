@@ -1,0 +1,39 @@
+====================================================================
+ASAMA 1g - DIS GECERLIK (Bakanlik aylik varis sayilari, 2016-2025)
+====================================================================
+Karsilastirilan ay sayisi: 120 | kelime: 59
+
+Pazar duzeyi (kelime serilerinin z-skor ortalamasi ile varis):
+geo  r_level  r_deseas  r_yoy  mean_icc
+ IR    0.351     0.277  0.794     0.997
+ DE    0.668     0.535  0.679     0.992
+ RU    0.615     0.550  0.745     0.990
+ GB    0.666     0.616  0.791     0.986
+ SA    0.534     0.359  0.705     0.970
+ PL    0.814     0.790  0.701     0.954
+ NL    0.584     0.459  0.635     0.944
+ KZ    0.349    -0.161  0.658     0.771
+ BG    0.485     0.671  0.764     0.757
+ US    0.472     0.465  0.175     0.739
+ IQ    0.469     0.285  0.680     0.610
+ FR    0.371     0.281  0.391     0.336
+ AZ    0.327     0.207  0.365     0.213
+ UA    0.400     0.403  0.372     0.103
+ GE   -0.000     0.004 -0.069     0.003
+
+Kelime duzeyi: ICC sinifina gore medyan korelasyon
+            n  med_r_level  med_r_deseas  med_r_yoy  med_level_nocovid  med_deseas_nocovid
+icc_class                                                                                 
+ICC<0.50   16        0.042         0.036      0.003              0.086               0.055
+0.50-0.90   8        0.495         0.401      0.562              0.414               0.335
+ICC>=0.90  35        0.536         0.436      0.685              0.487               0.143
+
+Spearman(ICC, r_level)   = 0.528
+Spearman(ICC, r_deseas)  = 0.404
+Spearman(ICC, r_yoy)     = 0.641
+Spearman(farkli deger, r_deseas) = 0.286
+COVID (2020-2021) disarida: Spearman(ICC, r_level) = 0.465, Spearman(ICC, r_deseas) = 0.080
+
+NOT: Bu analiz nedensellik degil, ayni donemde es-hareketi olcer. COVID-19 (2020-2021)
+donemi dahildir. Varis sayilari milliyete gore ulusal giris sayisidir.
+====================================================================
