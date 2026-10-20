@@ -1,0 +1,34 @@
+====================================================================
+ASAMA 1c - ICC(2,1) %95 GUVEN ARALIKLARI
+====================================================================
+Cekim sayisi: 46 | bootstrap: 1000 | seed: 20261015
+
+--- Pazar duzeyinde ortalama ICC (bootstrap %95 GA, aylar uzerinden) ---
+geo  n_keywords  n_draws  mean_icc  boot_ci_lower  boot_ci_upper
+ IR           4       45     0.997          0.996          0.998
+ DE           4       46     0.992          0.990          0.994
+ RU           4       46     0.990          0.987          0.993
+ GB           4       46     0.986          0.983          0.988
+ SA           4       34     0.970          0.952          0.978
+ PL           4       46     0.954          0.940          0.962
+ NL           4       46     0.944          0.914          0.955
+ KZ           4       34     0.771          0.748          0.792
+ BG           4       46     0.757          0.709          0.795
+ US           4       34     0.739          0.730          0.745
+ IQ           4       46     0.610          0.555          0.645
+ FR           4       34     0.336          0.296          0.369
+ AZ           4       34     0.213          0.173          0.236
+ UA           4       46     0.103          0.057          0.133
+ GE           3       32     0.003         -0.002          0.008
+
+--- Kelime duzeyinde sinif dagilimi (GA alt sinirina gore, Koo ve Li esikleri) ---
+class_by_lower_bound
+mukemmel          34
+zayif/belirsiz    16
+orta               5
+iyi                4
+
+NOT: Bootstrap aylar arasi zamansal bagimliligi yok sayar; GA'lar
+bu varsayim altinda yaklasik degerlerdir. Kelime duzeyindeki GA
+analitiktir (iki yonlu rastgele etkiler, mutlak uyum, tek olcum).
+====================================================================

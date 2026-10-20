@@ -1,0 +1,59 @@
+====================================================================
+ASAMA 1f - DAYANIKLILIK KONTROLLERI
+====================================================================
+a,b) ICC(2,1) mutlak uyum | ICC(3,1) tutarlilik | log(1+x) ICC | ort. Spearman
+      icc2   icc3  icc2_log  spearman  max_abs_drift
+geo                                                 
+IR   0.997  0.997     0.996     0.997          0.000
+DE   0.992  0.993     0.993     0.992          0.001
+RU   0.990  0.990     0.976     0.986          0.000
+GB   0.986  0.991     0.984     0.993          0.006
+SA   0.970  0.970     0.916     0.929          0.000
+PL   0.954  0.954     0.932     0.948          0.000
+NL   0.944  0.944     0.873     0.915          0.000
+KZ   0.771  0.772     0.684     0.748          0.001
+BG   0.757  0.758     0.723     0.764          0.001
+US   0.739  0.739     0.731     0.738          0.000
+IQ   0.610  0.611     0.563     0.589          0.001
+FR   0.336  0.337     0.310     0.334          0.003
+AZ   0.213  0.213     0.196     0.211          0.002
+UA   0.103  0.103     0.107     0.111          0.000
+GE   0.003  0.003     0.003     0.004          0.000
+
+En buyuk |ICC3-ICC2| (kelime duzeyi): 0.006
+
+c) Pazar ortalamasi ICC %95 GA genisligi: iid vs 12-aylik blok bootstrap
+     iid_width  block_width
+geo                        
+IR       0.003        0.002
+DE       0.004        0.007
+RU       0.006        0.012
+GB       0.005        0.010
+SA       0.025        0.030
+PL       0.021        0.037
+NL       0.040        0.065
+KZ       0.044        0.048
+BG       0.092        0.134
+US       0.015        0.020
+IQ       0.099        0.104
+FR       0.073        0.113
+AZ       0.060        0.043
+UA       0.075        0.092
+GE       0.010        0.007
+
+d) Kategori etkisi yalniz ORTAK cekim gunleriyle: eslesmis fark ile orijinal fark arasi Spearman = 0.997
+geo                 keyword  n_common  icc_cat_matched  icc_nocat_matched  diff_matched
+ UA  відпочинок у Туреччині        40            0.005              0.837         0.832
+ GE         ტურები თურქეთში        27           -0.000              0.808         0.809
+ FR    vols vers la Turquie        33            0.029              0.653         0.624
+ KZ       авиабилеты Турция        33            0.143              0.755         0.612
+ US        Antalya vacation        33            0.027              0.638         0.611
+ UA        готелі Туреччина        40            0.415              0.863         0.448
+ FR     vacances en Turquie        33            0.633              0.964         0.331
+ BG самолетни билети Турция        40            0.234              0.542         0.308
+
+e) 'Farkli deger sayisi >= 6' kurali
+ icc_cut   auc  lomo_accuracy  accuracy_fixed_rule_ge6
+    0.50 0.999          0.966                    0.966
+    0.75 0.924          0.898                    0.898
+====================================================================

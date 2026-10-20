@@ -1,0 +1,39 @@
+CEKIM BOSLUKLARI - ASAMA 1 (Tekrarli GT Cekimleri)
+====================================================
+Kapsanan donem : 2026-08-21 -> 2026-09-07 (bugune kadar)
+Beklenen gun sayisi : 18
+Gerceklesen cekim  : 15
+Eksik gunler       : 3
+
+Eksik tarihler:
+  - 2026-08-22  (Gorev Zamanlayici KURULMADAN ONCE - script hic
+                 calistirilmamis, calistir.bat elle tetiklenmemis)
+  - 2026-08-30  (ayni durum - hicbir kayit yok)
+  - 2026-09-06  (Gorev Zamanlayici KURULDUKTAN SONRA ilk bosluk -
+                 collect_gt.log / collection_log.csv icinde bu tarihe
+                 ait hicbir kayit yok; olasi neden: bilgisayar o gun
+                 09:00'da kapali/uyku modundaydi ve gorev "missed start"
+                 icin telafi calistirmasi yapmadi)
+
+Neden (ilk iki gun): Gorev Zamanlayici henuz kurulmamisti, script
+elle calistirilmadi - HATA degil, operasyonel bosluk.
+
+Neden (09-06): Gorev Zamanlayici aktifken olusan ILK bosluk. Bu,
+"oturum kapali olsa bile calisir" ayarinin makine KAPALIYKEN calismasini
+GARANTI ETMEDIGINI gosteriyor - sadece oturum acik olmasa da calisir,
+ama bilgisayar tamamen kapaliysa/uyku modundaysa yine atlanir.
+
+Not (09-07): Bugunku cekim run_scheduled.bat ile calisti ama planlanan
+09:00 yerine ~11:23'te (yerel saat) basladi - yine gec baslama isareti;
+muhtemelen bilgisayar o saatte acildi/uyandi.
+
+Onlem: "GT-Proje Gunluk Cekim" gorevi ve ayrica bu projedeki otomatik
+gunluk kontrol (gt-proje-gunluk-kontrol, her gun ~09:35) calisiyor.
+Yine de bilgisayarin o saatte acik/uyanik olmasi HALA gerekli - bu
+tam otomatik degil, kullanicinin makineyi kapatmamasina bagli.
+
+Makalede raporlama onerisi:
+  "Cekimler 2026-08-21 - 2026-09-07 arasinda gunluk olarak
+   toplanmaya calisilmis; 18 gunluk pencerede 3 gun (22, 30 Agustos
+   ve 6 Eylul) makinenin kapali/uyku modunda olmasi nedeniyle
+   atlanmis, toplam N=15 tekrarli cekim analiz edilmistir."

@@ -1,0 +1,162 @@
+====================================================================
+ASAMA 1 - CEKIMLER ARASI VARYASYON OZETI
+>>> SURUM 2 - sifir siskin serilere uygun olcutler dahil <<<
+====================================================================
+Cekim sayisi : 46
+Cekim tarihleri: 2026-08-21, 2026-08-23, 2026-08-24, 2026-08-25, 2026-08-26, 2026-08-27, 2026-08-28, 2026-08-29, 2026-08-31, 2026-09-01, 2026-09-02, 2026-09-03, 2026-09-04, 2026-09-05, 2026-09-07, 2026-09-08, 2026-09-09, 2026-09-10, 2026-09-11, 2026-09-12, 2026-09-13, 2026-09-14, 2026-09-15, 2026-09-16, 2026-09-18, 2026-09-19, 2026-09-20, 2026-09-21, 2026-09-22, 2026-09-23, 2026-09-24, 2026-09-28, 2026-09-29, 2026-09-30, 2026-10-01, 2026-10-03, 2026-10-06, 2026-10-07, 2026-10-08, 2026-10-09, 2026-10-10, 2026-10-11, 2026-10-12, 2026-10-13, 2026-10-14, 2026-10-15
+
+--- Pazar duzeyinde kararlilik ---
+(ambig% = cekimlerin sinyal var/yok konusunda anlasamadigi ay orani)
+     mean_level  zero_pct  ambig_pct  kappa  mean_icc  mean_cv_pct  n_cv_reliable
+geo                                                                              
+GE        0.423    99.516     13.911  0.002     0.003      548.408              0
+UA        1.146    98.489     22.047  0.107     0.103      613.918              0
+AZ        6.732    87.419     33.071  0.188     0.213      447.715              0
+FR        8.960    82.897     46.850  0.298     0.336      397.896              0
+IQ        7.100    71.046     56.102  0.518     0.610      337.736              1
+US       19.526    24.676      8.661  0.025     0.739      136.437              3
+BG        8.886    36.935     41.142  0.423     0.757      172.764              1
+KZ       12.859    39.642     38.386  0.565     0.771      158.881              2
+NL       22.236    12.380     30.709  0.433     0.944       46.466              3
+PL       10.242    17.866     25.197  0.700     0.954       77.160              2
+SA        8.950    34.877     39.370  0.664     0.970      116.221              1
+GB       18.270     0.424      1.969  0.500     0.986        6.297              3
+RU       21.775     1.476      4.724  0.595     0.990        8.916              3
+DE       18.873     0.398      0.394  0.968     0.992        4.403              3
+IR       24.990     0.787      0.394  0.989     0.997        3.751              4
+
+UYARI: 33/59 anahtar kelimede CV GUVENILIR DEGIL
+(ortalama duzey < 5 veya sifir orani > %25). Bu kelimelerde
+CV yerine Fleiss kappa ve belirsiz-ay oranina bakin.
+
+--- SADECE CV'si guvenilir kelimeler: duzey-kararlilik iliskisi ---
+geo           keyword  mean_level  mean_cv_pct  icc_2_1
+ PL       loty Turcja        5.19        44.09     0.99
+ DE       Flug Türkei        7.24         2.50     1.00
+ NL  vluchten Turkije        7.57        75.78     0.97
+ US   Turkey vacation        7.83         8.51     0.94
+ GB     Turkey hotels       15.02         4.24     0.99
+ IR      سفر به ترکیه       15.41         8.22     0.99
+ IR      هتل استانبول       16.89         3.43     1.00
+ GB    Turkey holiday       17.00         4.14     0.99
+ KZ    отдых в Турции       17.57        69.94     0.99
+ KZ      тур в Турцию       20.03        44.32     0.98
+ IQ     فنادق اسطنبول       22.24        90.14     0.97
+ RU    отдых в Турции       22.96         3.15     1.00
+ SA     فنادق اسطنبول       23.34        11.07     1.00
+ US     Turkey hotels       23.44         2.94     0.99
+ RU      отели Турция       24.03         3.56     1.00
+ DE      Hotel Türkei       25.50         3.00     0.99
+ BG    почивка Турция       27.30         4.59     1.00
+ PL    wakacje Turcja       30.86         2.58     1.00
+ NL  vakantie Turkije       30.94         5.11     0.99
+ IR        بلیط ترکیه       33.44         1.64     1.00
+ IR         تور ترکیه       34.22         1.70     1.00
+ RU      тур в Турцию       36.19         2.24     1.00
+ GB flights to Turkey       37.61         3.57     0.99
+ DE     Türkei Urlaub       39.51         3.04     1.00
+ NL     hotel Turkije       45.44         3.51     1.00
+ US flights to Turkey       46.80         1.83     1.00
+
+Duzey ile CV arasi Spearman korelasyonu: -0.554
+(guclu negatif deger AS2 hipotezini destekler)
+
+--- En kararsiz 10 anahtar kelime (ortalama CV'ye gore) ---
+geo                keyword  mean_level  zero_share_pct  mean_cv_pct  icc_2_1
+ UA       тур до Туреччини        0.24           99.69       666.46     0.00
+ UA   авіаквитки Туреччина        0.35           99.50       655.73     0.00
+ UA відпочинок у Туреччині        0.27           99.64       651.20     0.00
+ AZ           Türkiyə turu        0.17           99.61       583.10    -0.00
+ FR     vacances à Antalya        0.19           99.58       583.10    -0.00
+ AZ      Türkiyəyə səyahət        0.19           99.61       572.04     0.00
+ GE       სასტუმრო თურქეთი        0.34           99.58       565.69    -0.00
+ GE     თურქეთი მოგზაურობა        0.42           99.51       546.61     0.00
+ FR   vols vers la Turquie        0.28           99.35       543.61     0.03
+ IQ      تذاكر طيران تركيا        0.35           97.16       534.87     0.09
+
+--- En kararli 10 anahtar kelime ---
+geo           keyword  mean_level  zero_share_pct  mean_cv_pct  icc_2_1
+ IR        بلیط ترکیه       33.44            0.79         1.64     1.00
+ IR         تور ترکیه       34.22            0.79         1.70     1.00
+ US flights to Turkey       46.80            0.00         1.83     1.00
+ RU      тур в Турцию       36.19            0.00         2.24     1.00
+ DE       Flug Türkei        7.24            0.00         2.50     1.00
+ PL    wakacje Turcja       30.86            0.00         2.58     1.00
+ US     Turkey hotels       23.44            0.00         2.94     0.99
+ DE      Hotel Türkei       25.50            0.00         3.00     0.99
+ DE     Türkei Urlaub       39.51            0.00         3.04     1.00
+ RU    отдых в Турции       22.96            0.00         3.15     1.00
+
+--- Cekim ciftleri arasi korelasyon ---
+Ortalama r : 0.8437
+Minimum r  : -0.0598
+
+--- Zirve ay tutarliligi ---
+Tum cekimlerde ayni zirveyi veren kelime orani: 35.6%
+Zirve ayi cekime gore DEGISEN kelimeler:
+geo                 keyword  n_distinct_peaks  modal_agreement_pct
+ AZ            Antalya turu                17                 23.5
+ AZ            Türkiyə turu                12                 67.6
+ AZ       Türkiyəyə səyahət                15                 55.9
+ AZ           İstanbul otel                 9                 38.2
+ BG самолетни билети Турция                26                 19.6
+ BG           хотели Турция                 2                 76.1
+ DE          Antalya Urlaub                 2                 97.8
+ DE            Hotel Türkei                 2                 91.3
+ DE           Türkei Urlaub                 3                 87.0
+ FR           hôtel Turquie                 7                 73.5
+ FR     vacances en Turquie                 8                 64.7
+ FR      vacances à Antalya                17                 52.9
+ FR    vols vers la Turquie                18                 44.1
+ GE      თურქეთი მოგზაურობა                17                 46.9
+ GE        სასტუმრო თურქეთი                14                 59.4
+ GE         ტურები თურქეთში                16                 43.8
+ IQ        السياحة في تركيا                12                 34.8
+ IQ       تذاكر طيران تركيا                23                 13.0
+ IQ             تركيا سياحة                11                 50.0
+ IQ           فنادق اسطنبول                 3                 52.2
+ IR            سفر به ترکیه                 2                 97.8
+ KZ       авиабилеты Турция                22                 17.6
+ KZ          отдых в Турции                 3                 79.4
+ KZ            отели Турция                 2                 82.4
+ KZ            тур в Турцию                 2                 94.1
+ NL        Antalya vakantie                11                 63.0
+ NL        vakantie Turkije                 3                 93.5
+ PL         Antalya wakacje                 3                 69.6
+ PL           hotele Turcja                 5                 67.4
+ PL             loty Turcja                 3                 95.7
+ RU       авиабилеты Турция                 2                 93.5
+ UA    авіаквитки Туреччина                20                 56.5
+ UA  відпочинок у Туреччині                15                 65.2
+ UA        готелі Туреччина                15                 23.9
+ UA        тур до Туреччини                14                 69.6
+ US        Antalya vacation                22                 17.6
+ US           Turkey hotels                 2                 70.6
+ US         Turkey vacation                 2                 94.1
+
+HATIRLATMA: mean_level dusuk ve zero_share yuksek kelimelerde
+CV'nin buyuk cikmasi BEKLENEN sonuctur (AS2 hipotezi).
+====================================================================
+
+====================================================================
+MAKALE ICIN ONERI (Turkce akademik uslup kurallarina uygun taslak)
+====================================================================
+46 tekrarli cekimden elde edilen bulgular, kaynak pazarlar arasinda
+belirgin bir guvenilirlik hiyerarsisine isaret etmektedir. Pazar
+duzeyinde ortalama ICC(2,1) degeri en yuksek IR pazarinda (0.997),
+en dusuk ise GE pazarinda (0.003) gozlenmistir. Arama hacmi duzeyi
+ile degisim katsayisi arasindaki Spearman korelasyonu -0.554 olarak
+hesaplanmis, bu negatif iliski dusuk hacimli kelimelerde orneklem
+gurultusunun sistematik olarak yukseldigini varsayan AS2 hipotezini
+desteklemektedir. Cekim ciftleri arasindaki ortalama Pearson
+korelasyonu 0.844 duzeyinde bulunmus, bu deger ICC tabanli
+siralamayi bagimsiz bir yontemle dogrulamaktadir. Anahtar
+kelimelerin yuzde 35.6 kadari tum cekimlerde ayni zirve ayini
+vermis, geri kalaninda gozlenen tutarsizlik buyuk olcude dusuk
+hacimli pazarlarda yogunlasmistir. Bulgular birlikte
+degerlendirildiginde, Google Trends verisinin tekrar-tekrar
+cekilebilirliginin arama hacmine guclu bicimde bagli oldugu, yuksek
+hacimli pazarlarda neredeyse mukemmel duzeyde kararlilik gosterirken
+dusuk hacimli pazarlarda ayni verinin metodolojik olarak
+kullanilamaz hale gelebilecegi degerlendirilmektedir.
+====================================================================

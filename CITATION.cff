@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this data or code, please cite it as below."
+title: "Replication package: How reliable is a single Google Trends pull? Evidence from fifteen source markets of Turkey"
+authors:
+  - family-names: "Güleryüz"
+    given-names: "Umut"
+    orcid: "https://orcid.org/0000-0002-2337-3577"
+    affiliation: "Bitlis Eren University"
+license: "MIT AND CC-BY-4.0"
+date-released: "2026-10-20"

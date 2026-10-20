@@ -1,0 +1,40 @@
+====================================================================
+ASAMA 1d - KUANTIZASYON (TAM SAYI YUVARLAMA) ETKISI
+====================================================================
+Cekim sayisi: 46 | kelime: 59
+
+Spearman(ortalama farkli deger sayisi, ICC) = 0.900
+Spearman(maksimum deger, ICC)               = 0.512
+
+--- Farkli deger sayisina gore ICC ---
+               n_kelime  medyan_icc  ort_icc  medyan_sd_orani
+mean_distinct                                                
+<=5                  16       0.007    0.098           29.182
+6-10                  3       0.971    0.788            0.894
+11-20                13       0.936    0.900            3.149
+21-40                10       0.991    0.892            2.485
+>40                  17       0.998    0.994            2.837
+
+--- Yuvarlama SD'sine gore (sd_ratio = gozlenen SD / 0.289) ---
+sd_ratio ~ 1: cekimler arasi fark yuvarlamayla aciklanabilir.
+sd_ratio >> 1: ornekleme gurultusu yuvarlamadan cok buyuk.
+
+     mean_level  mean_distinct  max_value  sd_ratio   icc
+geo                                                      
+IR        24.99          42.56      67.77      1.58  1.00
+DE        18.87          32.30      45.37      1.99  0.99
+RU        21.78          44.17      75.11      1.67  0.99
+GB        18.27          30.05      45.43      2.46  0.99
+SA         8.95          27.13      43.90      2.87  0.97
+PL        10.24          22.58      31.99      1.48  0.95
+NL        22.24          36.77      65.89      4.81  0.94
+KZ        12.86          31.42      68.57      7.62  0.77
+BG         8.89          19.95      32.83      2.98  0.76
+US        19.53          26.73      41.34      2.06  0.74
+IQ         7.10          19.29      41.73     11.45  0.61
+FR         8.96          15.22      59.85     41.15  0.34
+AZ         6.73          11.08      47.36     37.90  0.21
+UA         1.15           2.82      45.62     45.54  0.10
+GE         0.42           1.61      45.77     55.47  0.00
+
+====================================================================

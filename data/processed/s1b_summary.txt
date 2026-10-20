@@ -1,0 +1,143 @@
+====================================================================
+ASAMA 1b - KATEGORI FILTRESI ETKISI (cat=67 vs cat=0)
+====================================================================
+Kategorili cekim sayisi  : 46
+Kategorisiz cekim sayisi : 40
+
+--- Pazar bazinda basarisizlik orani (collection_log*.csv) ---
+geo  n_attempts_cat  n_fail_cat  fail_rate_pct_cat  n_attempts_nocat  n_fail_nocat  fail_rate_pct_nocat  category_induced_fail
+ GE              47          15               31.9                40             0                  0.0                   True
+ IR              46           1                2.2                40             0                  0.0                   True
+ DE              47           1                2.1                40             0                  0.0                   True
+ RU              47           1                2.1                40             0                  0.0                   True
+ FR              34           0                0.0                33             0                  0.0                  False
+ BG              46           0                0.0                40             0                  0.0                  False
+ AZ              34           0                0.0                33             0                  0.0                  False
+ IQ              46           0                0.0                40             0                  0.0                  False
+ GB              46           0                0.0                40             0                  0.0                  False
+ NL              46           0                0.0                40             0                  0.0                  False
+ KZ              34           0                0.0                33             0                  0.0                  False
+ PL              46           0                0.0                40             0                  0.0                  False
+ SA              34           0                0.0                33             0                  0.0                  False
+ UA              46           0                0.0                40             0                  0.0                  False
+ US              34           0                0.0                33             0                  0.0                  False
+
+UYARI: Asagidaki pazarlarda basarisizlik SADECE kategori
+filtresi uygulaninca ortaya cikiyor (kategorisiz sette hic yok):
+  GE: kategorili basarisizlik %31.9, kategorisiz %0.0
+  IR: kategorili basarisizlik %2.2, kategorisiz %0.0
+  DE: kategorili basarisizlik %2.1, kategorisiz %0.0
+  RU: kategorili basarisizlik %2.1, kategorisiz %0.0
+-> Bu pazarlarda 'cokme' ornekleme gurultusu degil, DOGRUDAN
+   kategori filtresinin neden oldugu tam veri kaybidir.
+
+--- Kelime bazinda seviye farki (nocat - cat), en buyuk 15 ---
+geo                keyword  mean_level_cat  mean_level_nocat  level_diff_nocat_minus_cat  zero_share_diff_pct
+ GB         Turkey holiday           17.00             49.47                       32.47                 0.00
+ FR    vacances en Turquie           17.73             36.12                       18.39               -64.58
+ AZ          İstanbul otel           25.55             42.25                       16.70               -46.24
+ GB          Turkey hotels           15.02             28.61                       13.59                 0.00
+ FR          hôtel Turquie           17.64             30.40                       12.76               -59.55
+ UA       готелі Туреччина            3.72             15.73                       12.01               -31.01
+ GE        ტურები თურქეთში            0.51             10.41                        9.90               -21.07
+ NL       vakantie Turkije           30.94             40.15                        9.21                -0.05
+ IR           هتل استانبول           16.89             25.01                        8.11                -0.10
+ UA відпочинок у Туреччині            0.27              7.06                        6.79               -16.83
+ GB        Antalya holiday            3.45              7.59                        4.14                -1.69
+ BG          хотели Турция            4.24              7.99                        3.75               -19.33
+ PL          hotele Turcja            4.15              6.62                        2.47                -5.93
+ DE           Hotel Türkei           25.50             27.63                        2.14                 0.00
+ RU         отдых в Турции           22.96             24.65                        1.69                 0.00
+
+--- ICC farki (nocat - cat), her iki sette de >=2 cekim olanlar ---
+geo                 keyword  n_draws_cat  icc_2_1_cat  n_draws_nocat  icc_2_1_nocat  icc_diff
+ UA  відпочинок у Туреччині           46        0.004             40          0.837     0.833
+ GE         ტურები თურქეთში           32        0.009             40          0.811     0.802
+ FR    vols vers la Turquie           34        0.028             33          0.653     0.625
+ US        Antalya vacation           34        0.026             33          0.638     0.612
+ KZ       авиабилеты Турция           34        0.143             33          0.755     0.612
+ UA        готелі Туреччина           46        0.408             40          0.863     0.455
+ FR     vacances en Turquie           34        0.635             33          0.964     0.330
+ BG самолетни билети Турция           46        0.232             40          0.542     0.310
+ FR           hôtel Turquie           34        0.685             33          0.965     0.280
+ AZ            Antalya turu           34        0.190             33          0.469     0.279
+ AZ           İstanbul otel           34        0.662             33          0.916     0.253
+ NL        Antalya vakantie           46        0.812             40          0.931     0.118
+ IQ             تركيا سياحة           46        0.594             40          0.669     0.075
+ BG           хотели Турция           46        0.895             40          0.966     0.071
+ PL         Antalya wakacje           46        0.858             40          0.916     0.058
+ US         Turkey vacation           34        0.936             33          0.990     0.054
+ IQ        السياحة في تركيا           46        0.784             40          0.830     0.047
+ BG        екскурзия Турция           46        0.905             40          0.939     0.034
+ IQ       تذاكر طيران تركيا           46        0.089             40          0.114     0.025
+ RU       авиабилеты Турция           46        0.964             40          0.983     0.020
+ GB         Antalya holiday           46        0.971             40          0.988     0.018
+ PL           hotele Turcja           46        0.971             40          0.986     0.015
+ KZ            отели Турция           34        0.975             33          0.987     0.011
+ UA        тур до Туреччини           46        0.000             40          0.010     0.009
+ KZ          отдых в Турции           34        0.985             33          0.994     0.008
+ SA             تركيا سياحة           34        0.966             33          0.974     0.008
+ SA       تذاكر طيران تركيا           34        0.922             33          0.929     0.007
+ AZ            Türkiyə turu           34       -0.004             33          0.002     0.006
+ KZ            тур в Турцию           34        0.982             33          0.986     0.005
+ DE          Antalya Urlaub           46        0.985             40          0.989     0.004
+ IQ           فنادق اسطنبول           46        0.974             40          0.976     0.002
+ GE        სასტუმრო თურქეთი           32       -0.004             40         -0.003     0.001
+ SA        السياحة في تركيا           34        0.992             33          0.993     0.001
+ NL        vluchten Turkije           46        0.974             40          0.974     0.001
+ BG          почивка Турция           46        0.998             40          0.998     0.000
+ SA           فنادق اسطنبول           34        0.998             33          0.999     0.000
+ RU            отели Турция           46        0.999             40          0.999     0.000
+ RU          отдых в Турции           46        0.999             40          0.999     0.000
+ GB           Turkey hotels           46        0.990             40          0.990     0.000
+ RU            тур в Турцию           46        0.999             40          0.999     0.000
+ DE           Türkei Urlaub           46        0.995             40          0.995    -0.000
+ PL             loty Turcja           46        0.987             40          0.986    -0.000
+ DE            Hotel Türkei           46        0.992             40          0.992    -0.000
+ DE             Flug Türkei           46        0.996             40          0.995    -0.001
+ US           Turkey hotels           34        0.995             33          0.994    -0.001
+ NL        vakantie Turkije           46        0.993             40          0.992    -0.002
+ FR      vacances à Antalya           34       -0.004             33         -0.005    -0.002
+ US       flights to Turkey           34        0.999             33          0.996    -0.002
+ UA    авіаквитки Туреччина           46        0.000             40         -0.003    -0.003
+ AZ       Türkiyəyə səyahət           34        0.001             33         -0.002    -0.003
+ IR            هتل استانبول           45        0.998             40          0.995    -0.003
+ GB       flights to Turkey           46        0.992             40          0.988    -0.004
+ GE      თურქეთი მოგზაურობა           32        0.003             40         -0.002    -0.005
+ PL          wakacje Turcja           46        0.999             40          0.994    -0.006
+ GB          Turkey holiday           46        0.992             40          0.986    -0.006
+ IR               تور ترکیه           45        0.999             40          0.992    -0.007
+ NL           hotel Turkije           46        0.996             40          0.989    -0.007
+ IR            سفر به ترکیه           45        0.993             40          0.983    -0.010
+ IR              بلیط ترکیه           45        0.999             40          0.984    -0.014
+
+HATIRLATMA: Kategori filtresinin etkisini yorumlarken cekim sayisi
+farkina dikkat edin (kategorisiz seri kategoriliden daha kisa
+baslamis olabilir); ICC/CV karsilastirmalari esit cekim sayisinda
+daha guvenilirdir.
+====================================================================
+
+====================================================================
+MAKALE ICIN ONERI (Turkce akademik uslup kurallarina uygun taslak)
+====================================================================
+Kategori filtresinin dusuk hacimli pazarlardaki etkisi tek bir
+bozulma bicimine indirgenememektedir. Basarisizlik oranlari
+karsilastirildiginda, kategori uygulandiginda GE pazarinda yuzde
+31.9; IR pazarinda yuzde 2.2; DE pazarinda yuzde 2.1; RU pazarinda
+yuzde 2.1 oraninda cekimin bos yanitla sonuclandigi, kategori
+kaldirildiginda ise bu oranin tum pazarlarda sifira dustugu
+gorulmektedir. Bunun yaninda, sorgunun basarili dondugu ancak elde
+edilen degerlerin kategori altinda asiri bastirildigi ikinci bir
+bozulma bicimi belirlenmistir; UA, FR, US, KZ, BG ve AZ pazarlarina
+ait dusuk hacimli anahtar kelimelerde cekimler arasi tutarlilik
+katsayisi (ICC) kategori kisiti altinda belirgin sekilde dusmekte,
+kategorisiz sorguda ise yuksek kalmaktadir. Buna karsin Irak
+pazarindaki zayifligin buyuk olcude kategoriden bagimsiz seyrettigi
+gozlenmis (ortalama ICC farki 0.037), bu da soz konusu pazardaki
+dusuk guvenilirligin dogrudan arama hacmi sinirliligindan
+kaynaklandigina isaret etmektedir. Bulgular birlikte
+degerlendirildiginde, kategori tabanli filtrelemenin dusuk hacimli
+pazarlarda yalnizca veri kaybina degil, veri kaybi gozlenmeyen
+durumlarda dahi olcum guvenilirliginde onemli bir azalmaya yol
+acabilecegi degerlendirilmektedir.
+====================================================================
