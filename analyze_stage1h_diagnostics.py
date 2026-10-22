@@ -1,0 +1,164 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+ASAMA 1h - Tani olcutu degerlendirmesi, donem duyarliligi, sinyal/gurultu ayrimi ve sekiller
+===========================================================================================
+a) 'Farkli deger sayisi' kuralinin karisiklik matrisi, duyarlilik/ozgullugu, PPV/NPV,
+   cogunluk-sinifi tabani ve AUC'nin bootstrap GA'si; rakip tahmin ediciler (ort. duzey,
+   sifir orani, maksimum) ile karsilastirma; seyrek olmayan serilerde kural hala ayirt
+   ediyor mu (mekanik iliski suphesi).
+b) Donem duyarliligi: ilk 10 pazar icin yalniz 4 Eylul sonrasi cekimlerle (yeni 5 pazarla
+   ayni pencere) ICC; 10 Eylul oncesi/sonrasi (bekleme suresi degisimi) ICC.
+c) ICC'nin sinyal ve gurultu bilesenleri: aylar arasi SD (sinyal) ve ay-ici cekimler arasi SD
+   (gurultu), ICC sinifina gore.
+d) Sekiller (figures/fig1-fig3.png).
+
+Ciktilar: data/processed/s1h_*.csv, s1h_summary.txt, figures/*.png
+"""
+
+import os
+import numpy as np
+import pandas as pd
+from scipy.stats import rankdata
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+
+from analyze_stage1_v2 import load_draws, icc21
+
+OUT = os.path.join("data", "processed")
+FIG = "figures"
+SEED = 20261022
+rng = np.random.default_rng(SEED)
+os.makedirs(FIG, exist_ok=True)
+
+
+def auc(score, y):
+    pos, neg = score[y], score[~y]
+    if len(pos) == 0 or len(neg) == 0:
+        return np.nan
+    r = rankdata(np.concatenate([pos, neg]))
+    return (r[:len(pos)].sum() - len(pos) * (len(pos) + 1) / 2) / (len(pos) * len(neg))
+
+
+def main():
+    k = pd.read_csv(os.path.join(OUT, "s1_variability_by_keyword.csv"))[["geo", "keyword", "mean_level", "zero_share_pct", "icc_2_1"]]
+    q = pd.read_csv(os.path.join(OUT, "s1d_quantization_by_keyword.csv"))[["geo", "keyword", "mean_distinct", "max_value"]]
+    d = k.merge(q, on=["geo", "keyword"])
+    lines = ["=" * 68, "ASAMA 1h - TANI OLCUTU, DONEM DUYARLILIGI, SINYAL/GURULTU", "=" * 68]
+
+    # a) tani degerlendirmesi
+    rows = []
+    for cut in (0.5, 0.75):
+        y = (d.icc_2_1 >= cut).values
+        pred = (d.mean_distinct >= 6).values
+        tp, fp, fn, tn = (pred & y).sum(), (pred & ~y).sum(), (~pred & y).sum(), (~pred & ~y).sum()
+        base = max(y.mean(), 1 - y.mean())
+        boots = []
+        for _ in range(2000):
+            idx = rng.integers(0, len(d), len(d))
+            boots.append(auc(d.mean_distinct.values[idx], y[idx]))
+        lo, hi = np.nanpercentile(boots, [2.5, 97.5])
+        rows.append({"icc_cut": cut, "n_pos": int(y.sum()), "n": len(d), "TP": tp, "FP": fp, "FN": fn, "TN": tn,
+                     "sensitivity": tp / (tp + fn), "specificity": tn / (tn + fp),
+                     "PPV": tp / (tp + fp) if tp + fp else np.nan, "NPV": tn / (tn + fn) if tn + fn else np.nan,
+                     "accuracy": (tp + tn) / len(d), "majority_baseline": base,
+                     "auc": auc(d.mean_distinct.values, y), "auc_ci_lo": lo, "auc_ci_hi": hi})
+        for name, col in (("mean_level", "mean_level"), ("neg_zero_share", None), ("max_value", "max_value")):
+            s = -d.zero_share_pct.values if col is None else d[col].values
+            rows[-1][f"auc_{name}"] = auc(s, y)
+    diag = pd.DataFrame(rows)
+    diag.to_csv(os.path.join(OUT, "s1h_distinct_rule_diagnostics.csv"), index=False)
+    lines += ["", "a) Farkli deger >= 6 kurali (tek cekim tani olcutu)", diag.round(3).T.to_string(), ""]
+    sub = d[d.zero_share_pct < 50]
+    from scipy.stats import spearmanr
+    rho_all = spearmanr(d.mean_distinct, d.icc_2_1)[0]
+    rho_sub = spearmanr(sub.mean_distinct, sub.icc_2_1)[0]
+    lines.append(f"Spearman(farkli deger, ICC): tum kelimeler = {rho_all:.3f} (n={len(d)}); sifir orani < %50 olanlar = {rho_sub:.3f} (n={len(sub)})")
+
+    # b) donem duyarliligi
+    panel = load_draws()
+    wides = {}
+    for (geo, kw), sub_ in panel.groupby(["geo", "keyword"]):
+        wides[(geo, kw)] = sub_.pivot_table(index="date", columns="draw_date", values="value").sort_index()
+    orig10 = {"RU", "DE", "GB", "BG", "IR", "UA", "PL", "NL", "GE", "IQ"}
+    rows = []
+    for (geo, kw), w in wides.items():
+        cols = list(w.columns)
+        late = [c for c in cols if c >= "2026-09-04"]
+        pre = [c for c in cols if c < "2026-09-10"]
+        post = [c for c in cols if c >= "2026-09-10"]
+        rows.append({"geo": geo, "keyword": kw, "orig10": geo in orig10, "n_all": len(cols), "icc_all": icc21(w.values),
+                     "n_since_0904": len(late), "icc_since_0904": icc21(w[late].values) if len(late) > 5 else np.nan,
+                     "n_pre_0910": len(pre), "icc_pre_0910": icc21(w[pre].values) if len(pre) > 5 else np.nan,
+                     "n_post_0910": len(post), "icc_post_0910": icc21(w[post].values) if len(post) > 5 else np.nan})
+    per = pd.DataFrame(rows)
+    per.to_csv(os.path.join(OUT, "s1h_period_sensitivity_by_keyword.csv"), index=False)
+    g = per.groupby("geo").agg(n_all=("n_all", "max"), icc_all=("icc_all", "mean"), n_since_0904=("n_since_0904", "max"),
+                               icc_since_0904=("icc_since_0904", "mean"), n_pre=("n_pre_0910", "max"), icc_pre=("icc_pre_0910", "mean"),
+                               n_post=("n_post_0910", "max"), icc_post=("icc_post_0910", "mean")).sort_values("icc_all", ascending=False)
+    g.to_csv(os.path.join(OUT, "s1h_period_sensitivity_by_geo.csv"))
+    lines += ["", "b) Donem duyarliligi (pazar ortalamasi ICC)", g.round(3).to_string()]
+    for a, b in (("icc_all", "icc_since_0904"), ("icc_pre_0910", "icc_post_0910")):
+        ok = per[[a, b]].dropna()
+        lines.append(f"Kelime duzeyi Spearman({a}, {b}) = {ok[a].rank().corr(ok[b].rank()):.3f}; ort. mutlak fark = {(ok[a]-ok[b]).abs().mean():.3f} (n={len(ok)})")
+
+    # c) sinyal / gurultu
+    rows = []
+    for (geo, kw), w in wides.items():
+        m = w.values
+        mean_series = np.nanmean(m, axis=1)
+        signal_sd = np.nanstd(mean_series, ddof=1)
+        noise_sd = np.sqrt(np.nanmean(np.nanvar(m, axis=1, ddof=1)))
+        rows.append({"geo": geo, "keyword": kw, "signal_sd": signal_sd, "noise_sd": noise_sd})
+    sn = pd.DataFrame(rows).merge(k, on=["geo", "keyword"])
+    sn["cls"] = pd.cut(sn.icc_2_1, [-1, 0.5, 0.9, 1.01], labels=["ICC<0.50", "0.50-0.90", "ICC>=0.90"])
+    snt = sn.groupby("cls", observed=True).agg(n=("keyword", "count"), med_signal_sd=("signal_sd", "median"),
+                                                 med_noise_sd=("noise_sd", "median"), med_mean_level=("mean_level", "median"))
+    sn.to_csv(os.path.join(OUT, "s1h_signal_noise_by_keyword.csv"), index=False)
+    lines += ["", "c) Sinyal (aylar arasi SD) ve gurultu (ay-ici cekimler arasi SD), ICC sinifina gore", snt.round(3).to_string()]
+
+    # d) sekiller
+    d2 = d.copy()
+    cat = pd.read_csv(os.path.join(OUT, "s1b_category_effect_by_keyword.csv"))
+    colors = {"high": "#1b9e77", "mid": "#d95f02", "low": "#7570b3"}
+    geo_icc = d.groupby("geo").icc_2_1.mean()
+    grp = geo_icc.apply(lambda v: "high" if v >= 0.9 else ("mid" if v >= 0.5 else "low"))
+    plt.rcParams.update({"font.family": "serif", "font.size": 9})
+    fig, ax = plt.subplots(figsize=(6.2, 4.2))
+    for gname, lab in (("high", "Markets with mean ICC >= 0.90"), ("mid", "0.50 to 0.90"), ("low", "Below 0.50")):
+        s = d2[d2.geo.map(grp) == gname]
+        ax.scatter(s.mean_distinct, s.icc_2_1, s=22, alpha=0.8, color=colors[gname], label=lab)
+    ax.axvline(5.5, color="grey", ls="--", lw=0.8); ax.text(5.9, -0.08, "5 / 6 distinct values", fontsize=7, color="grey")
+    ax.set_xlabel("Mean number of distinct values per pull (of 127 months)"); ax.set_ylabel("ICC(2,1) of the keyword series")
+    ax.set_ylim(-0.12, 1.04); ax.legend(frameon=False, fontsize=7, loc="lower right"); fig.tight_layout()
+    fig.savefig(os.path.join(FIG, "fig1_icc_vs_distinct_values.png"), dpi=300); plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(4.6, 4.4))
+    ok = cat.dropna(subset=["icc_2_1_cat", "icc_2_1_nocat"])
+    ax.scatter(ok.icc_2_1_cat, ok.icc_2_1_nocat, s=22, color="#1f77b4", alpha=0.8)
+    ax.plot([-0.1, 1.05], [-0.1, 1.05], color="grey", lw=0.8, ls="--")
+    ax.set_xlabel("ICC with Travel category filter"); ax.set_ylabel("ICC without category filter")
+    ax.set_xlim(-0.1, 1.05); ax.set_ylim(-0.1, 1.05); ax.set_aspect("equal")
+    fig.tight_layout(); fig.savefig(os.path.join(FIG, "fig2_filtered_vs_unfiltered_icc.png"), dpi=300); plt.close(fig)
+
+    sh = pd.read_csv(os.path.join(OUT, "s1e_split_half_by_geo.csv"), index_col=0)
+    sh.columns = [int(c) for c in sh.columns]
+    fig, ax = plt.subplots(figsize=(6.2, 4.2))
+    for geo in sh.index:
+        s = sh.loc[geo].dropna()
+        ax.plot(s.index, s.values, marker="o", ms=3, lw=1, color=colors[grp[geo]], alpha=0.85)
+        if grp[geo] != "high":
+            ax.text(s.index[-1] + 0.25, s.values[-1], geo, fontsize=6.5, va="center", color=colors[grp[geo]])
+    ax.text(17.6, 1.012, "7 markets with mean ICC >= 0.90", fontsize=6.5, ha="right", va="bottom", color=colors["high"])
+    ax.set_xlabel("Number of pulls averaged (k)"); ax.set_ylabel("Split-half ICC of the k-pull mean")
+    ax.set_xlim(0.5, 17.8); ax.set_ylim(-0.05, 1.03); ax.set_xticks([1, 2, 3, 5, 8, 12, 16]); fig.tight_layout()
+    fig.savefig(os.path.join(FIG, "fig3_reliability_vs_pulls_averaged.png"), dpi=300); plt.close(fig)
+
+    with open(os.path.join(OUT, "s1h_summary.txt"), "w", encoding="utf-8") as f:
+        f.write("\n".join(lines + ["=" * 68]))
+    print("Yazildi: s1h_*, figures/*.png")
+
+
+if __name__ == "__main__":
+    main()

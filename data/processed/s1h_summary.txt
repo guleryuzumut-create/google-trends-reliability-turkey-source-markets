@@ -1,0 +1,56 @@
+====================================================================
+ASAMA 1h - TANI OLCUTU, DONEM DUYARLILIGI, SINYAL/GURULTU
+====================================================================
+
+a) Farkli deger >= 6 kurali (tek cekim tani olcutu)
+                         0       1
+icc_cut              0.500   0.750
+n_pos               43.000  39.000
+n                   59.000  59.000
+TP                  42.000  38.000
+FP                   1.000   5.000
+FN                   1.000   1.000
+TN                  15.000  15.000
+sensitivity          0.977   0.974
+specificity          0.938   0.750
+PPV                  0.977   0.884
+NPV                  0.938   0.938
+accuracy             0.966   0.898
+majority_baseline    0.729   0.661
+auc                  0.999   0.924
+auc_ci_lo            0.992   0.831
+auc_ci_hi            1.000   0.995
+auc_mean_level       0.990   0.897
+auc_neg_zero_share   1.000   0.995
+auc_max_value        0.692   0.613
+
+Spearman(farkli deger, ICC): tum kelimeler = 0.900 (n=59); sifir orani < %50 olanlar = 0.795 (n=36)
+
+b) Donem duyarliligi (pazar ortalamasi ICC)
+     n_all  icc_all  n_since_0904  icc_since_0904  n_pre  icc_pre  n_post  icc_post
+geo                                                                                
+IR      45    0.997            33           0.997     17    0.998      28     0.997
+DE      46    0.992            34           0.992     17    0.992      29     0.992
+RU      46    0.990            34           0.990     17    0.990      29     0.990
+GB      46    0.986            34           0.985     17    0.986      29     0.986
+SA      34    0.970            34           0.970      5      NaN      29     0.969
+PL      46    0.954            34           0.953     17    0.956      29     0.952
+NL      46    0.944            34           0.944     17    0.943      29     0.945
+KZ      34    0.771            34           0.771      5      NaN      29     0.773
+BG      46    0.757            34           0.758     17    0.758      29     0.757
+US      34    0.739            34           0.739      5      NaN      29     0.738
+IQ      46    0.610            34           0.608     17    0.608      29     0.610
+FR      34    0.336            34           0.336      5      NaN      29     0.338
+AZ      34    0.213            34           0.213      5      NaN      29     0.210
+UA      46    0.103            34           0.105     17    0.106      29     0.101
+GE      32    0.003            25           0.001      9   -0.004      23     0.000
+Kelime duzeyi Spearman(icc_all, icc_since_0904) = 0.999; ort. mutlak fark = 0.001 (n=59)
+Kelime duzeyi Spearman(icc_pre_0910, icc_post_0910) = 0.989; ort. mutlak fark = 0.003 (n=39)
+
+c) Sinyal (aylar arasi SD) ve gurultu (ay-ici cekimler arasi SD), ICC sinifina gore
+            n  med_signal_sd  med_noise_sd  med_mean_level
+cls                                                       
+ICC<0.50   16          0.723         3.960           0.294
+0.50-0.90   8          5.288         3.360           4.618
+ICC>=0.90  35         10.905         0.699          17.565
+====================================================================
