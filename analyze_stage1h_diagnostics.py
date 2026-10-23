@@ -145,7 +145,7 @@ def main():
                "cut": "5 | 6 farklı değer",
                "x1": "Çekim başına ortalama farklı değer sayısı (127 ay içinde)", "y1": "Anahtar kelime serisinin ICC(2,1) değeri",
                "x2": "Seyahat kategorisi filtreli ICC", "y2": "Filtresiz ICC",
-               "x3": "Ortalaması alınan çekim sayısı (k)", "y3": "k çekim ortalamasının bölünmüş-yarı ICC değeri",
+               "x3": "Ortalaması alınan çekim sayısı (k)", "y3": "k çekim ortalamasının yarıya bölme ICC değeri",
                "note3": "Ortalama ICC ≥ 0,90 olan 7 pazar 0,94'ün üzerindedir"},
     }
     from matplotlib.ticker import FuncFormatter

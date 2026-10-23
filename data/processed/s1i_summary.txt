@@ -1,0 +1,53 @@
+====================================================================
+ASAMA 1i - HAKEM ITIRAZLARINA YONELIK EK ANALIZLER
+====================================================================
+
+a) Kelime duzeyi medyan korelasyon (ICC sinifi kendi serisinin ICC'sine gore)
+      cls            seri  n  r_level  r_deseas  r_yoy  r_level_nocovid  r_deseas_nocovid
+ ICC<0.50 Travel filtreli 16    0.042     0.036  0.003            0.086             0.055
+0.50-0.90 Travel filtreli  8    0.495     0.401  0.562            0.414             0.335
+ICC>=0.90 Travel filtreli 35    0.536     0.436  0.685            0.487             0.143
+ ICC<0.50       Filtresiz  9    0.158     0.092  0.182            0.192             0.063
+0.50-0.90       Filtresiz  9    0.249     0.193  0.245            0.321             0.168
+ICC>=0.90       Filtresiz 41    0.537     0.528  0.689            0.491             0.288
+
+Kategorili ICC<0.50 olan 16 kelime: kategorili/filtresiz medyan r_level = 0.042 / 0.238; r_deseas = 0.036 / 0.158; r_deseas (2020-21 haric) = 0.055 / 0.152
+r_level: filtresiz > filtreli 40/59 kelimede; medyan fark (filtresiz - filtreli) = 0.009
+r_deseas: filtresiz > filtreli 38/59 kelimede; medyan fark (filtresiz - filtreli) = 0.016
+r_deseas_nocovid: filtresiz > filtreli 37/59 kelimede; medyan fark (filtresiz - filtreli) = 0.015
+Filtresiz seri: Spearman(ICC, r_level) = 0.405 (n=59)
+Filtresiz seri: Spearman(ICC, r_deseas) = 0.308 (n=59)
+Filtresiz seri: Spearman(ICC, r_deseas_nocovid) = 0.074 (n=59)
+
+b) Pazar ortalama ICC: yalniz ay bootstrap'i (s1c) ile ay + kelime iki asamali bootstrap; 'loo' bir kelimeyi disarida birakinca ortalamanin alt/ust degeri
+geo  n_keywords  mean_icc  two_stage_lo  two_stage_hi  loo_min  loo_max  boot_ci_lower  boot_ci_upper  width_ratio
+ IR           4     0.997         0.993         0.999    0.997    0.999          0.996          0.998        2.286
+ DE           4     0.992         0.987         0.996    0.991    0.994          0.990          0.994        2.205
+ RU           4     0.990         0.972         0.999    0.987    0.999          0.987          0.993        4.406
+ GB           4     0.986         0.974         0.993    0.984    0.991          0.983          0.988        3.589
+ SA           4     0.970         0.930         0.995    0.960    0.985          0.952          0.978        2.547
+ PL           4     0.954         0.885         0.994    0.938    0.985          0.940          0.962        5.000
+ NL           4     0.944         0.841         0.995    0.926    0.988          0.914          0.955        3.782
+ KZ           4     0.771         0.361         0.985    0.700    0.981          0.748          0.792       14.139
+ BG           4     0.757         0.385         0.970    0.677    0.932          0.709          0.795        6.793
+ US           4     0.739         0.261         0.997    0.652    0.976          0.730          0.745       50.978
+ IQ           4     0.610         0.234         0.896    0.489    0.784          0.555          0.645        7.344
+ FR           4     0.336         0.002         0.664    0.220    0.449          0.296          0.369        9.115
+ AZ           4     0.213        -0.002         0.514    0.063    0.285          0.173          0.236        8.200
+ UA           4     0.103        -0.002         0.308    0.002    0.137          0.057          0.133        4.097
+ GE           3     0.003        -0.004         0.013   -0.000    0.006         -0.002          0.008        1.699
+
+c) Farkli deger kurali: 13 kume (pazar / ortak sorgu seti) uzerinden kume bootstrap'i
+          olcut  tahmin  kume_bootstrap_lo  kume_bootstrap_hi
+AUC (ICC>=0.50)   0.999              0.993              1.000
+   Spearman rho   0.900              0.819              0.945
+     duyarlilik   0.977              0.925              1.000
+       ozgulluk   0.938              0.842              1.000
+
+d) Gunluge gore kalici basarisiz 18 cekimden nedeni belirlenenler (son denemelerin turu)
+DE: bos veri = 1
+GE: bos veri = 15
+IR: istek siniri (429) = 1
+RU: bos veri = 1
+Gunlukte eslesen: 18 / 18
+====================================================================

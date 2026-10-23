@@ -24,6 +24,7 @@ Licences: code under MIT (`LICENSE`), data under CC BY 4.0 (`LICENSE-DATA.md`). 
 | `validity_data/ktb_annual/` | Annual border statistics workbooks (2016-2025), Ministry of Culture and Tourism of Türkiye, General Directorate of Investment and Enterprises (https://yigm.ktb.gov.tr/TR-249709/yillik-bultenler.html). Sheet `T7-Mil-Ay Göre G.Yabancı` is used. |
 | `data/external/ktb_monthly_arrivals_2016_2025.csv` | Monthly foreign visitor arrivals by nationality for the 15 markets, extracted from the workbooks. |
 | `analyze_stage1h_diagnostics.py` | Screening-rule diagnostics, period sensitivity, signal and noise components, and the three figures in English and Turkish versions (`figures/`; Times New Roman 10 pt). |
+| `analyze_stage1i_revision.py` | Additional analyses: validity of the unfiltered series against official arrivals, two-stage (keywords, months) bootstrap for market means, cluster bootstrap for the distinct-value rule, and causes of failed pulls (reads `data/collect_gt.log`). |
 | `data/processed/` | Outputs produced by the analysis scripts. |
 
 ## Reproducing the analysis
@@ -38,6 +39,7 @@ Python 3.14 with the packages in `requirements.txt`. From this folder, in order:
     python analyze_stage1f_robustness.py
     python analyze_stage1g_validity.py
     python analyze_stage1h_diagnostics.py
+    python analyze_stage1i_revision.py
 
 The scripts read `data/raw*` and write `data/processed/`. The bootstrap uses a fixed seed
 (`SEED` in `analyze_stage1c_icc_ci.py`). On Windows consoles with a non-UTF-8 code page,
