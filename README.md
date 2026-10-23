@@ -23,7 +23,7 @@ Licences: code under MIT (`LICENSE`), data under CC BY 4.0 (`LICENSE-DATA.md`). 
 | `analyze_stage1g_validity.py` | External validity: co-movement of keyword series with official monthly arrivals. |
 | `validity_data/ktb_annual/` | Annual border statistics workbooks (2016-2025), Ministry of Culture and Tourism of Türkiye, General Directorate of Investment and Enterprises (https://yigm.ktb.gov.tr/TR-249709/yillik-bultenler.html). Sheet `T7-Mil-Ay Göre G.Yabancı` is used. |
 | `data/external/ktb_monthly_arrivals_2016_2025.csv` | Monthly foreign visitor arrivals by nationality for the 15 markets, extracted from the workbooks. |
-| `analyze_stage1h_diagnostics.py` | Screening-rule diagnostics, period sensitivity, signal and noise components, and the three figures (`figures/`). |
+| `analyze_stage1h_diagnostics.py` | Screening-rule diagnostics, period sensitivity, signal and noise components, and the three figures in English and Turkish versions (`figures/`; Times New Roman 10 pt). |
 | `data/processed/` | Outputs produced by the analysis scripts. |
 
 ## Reproducing the analysis

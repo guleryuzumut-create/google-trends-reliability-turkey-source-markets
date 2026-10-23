@@ -11,7 +11,7 @@ b) Donem duyarliligi: ilk 10 pazar icin yalniz 4 Eylul sonrasi cekimlerle (yeni 
    ayni pencere) ICC; 10 Eylul oncesi/sonrasi (bekleme suresi degisimi) ICC.
 c) ICC'nin sinyal ve gurultu bilesenleri: aylar arasi SD (sinyal) ve ay-ici cekimler arasi SD
    (gurultu), ICC sinifina gore.
-d) Sekiller (figures/fig1-fig3.png).
+d) Sekiller (figures/fig1-fig3.png ve Turkce surumleri *_tr.png).
 
 Ciktilar: data/processed/s1h_*.csv, s1h_summary.txt, figures/*.png
 """
@@ -118,42 +118,81 @@ def main():
     sn.to_csv(os.path.join(OUT, "s1h_signal_noise_by_keyword.csv"), index=False)
     lines += ["", "c) Sinyal (aylar arasi SD) ve gurultu (ay-ici cekimler arasi SD), ICC sinifina gore", snt.round(3).to_string()]
 
-    # d) sekiller
+    # d) sekiller (Times New Roman 10 pt, 150 mm genislik: Word'de 1:1 boyutta okunur); EN ve TR surumleri
     d2 = d.copy()
     cat = pd.read_csv(os.path.join(OUT, "s1b_category_effect_by_keyword.csv"))
-    colors = {"high": "#1b9e77", "mid": "#d95f02", "low": "#7570b3"}
-    geo_icc = d.groupby("geo").icc_2_1.mean()
-    grp = geo_icc.apply(lambda v: "high" if v >= 0.9 else ("mid" if v >= 0.5 else "low"))
-    plt.rcParams.update({"font.family": "serif", "font.size": 9})
-    fig, ax = plt.subplots(figsize=(6.2, 4.2))
-    for gname, lab in (("high", "Markets with mean ICC >= 0.90"), ("mid", "0.50 to 0.90"), ("low", "Below 0.50")):
-        s = d2[d2.geo.map(grp) == gname]
-        ax.scatter(s.mean_distinct, s.icc_2_1, s=22, alpha=0.8, color=colors[gname], label=lab)
-    ax.axvline(5.5, color="grey", ls="--", lw=0.8); ax.text(5.9, -0.08, "5 / 6 distinct values", fontsize=7, color="grey")
-    ax.set_xlabel("Mean number of distinct values per pull (of 127 months)"); ax.set_ylabel("ICC(2,1) of the keyword series")
-    ax.set_ylim(-0.12, 1.04); ax.legend(frameon=False, fontsize=7, loc="lower right"); fig.tight_layout()
-    fig.savefig(os.path.join(FIG, "fig1_icc_vs_distinct_values.png"), dpi=300); plt.close(fig)
-
-    fig, ax = plt.subplots(figsize=(4.6, 4.4))
-    ok = cat.dropna(subset=["icc_2_1_cat", "icc_2_1_nocat"])
-    ax.scatter(ok.icc_2_1_cat, ok.icc_2_1_nocat, s=22, color="#1f77b4", alpha=0.8)
-    ax.plot([-0.1, 1.05], [-0.1, 1.05], color="grey", lw=0.8, ls="--")
-    ax.set_xlabel("ICC with Travel category filter"); ax.set_ylabel("ICC without category filter")
-    ax.set_xlim(-0.1, 1.05); ax.set_ylim(-0.1, 1.05); ax.set_aspect("equal")
-    fig.tight_layout(); fig.savefig(os.path.join(FIG, "fig2_filtered_vs_unfiltered_icc.png"), dpi=300); plt.close(fig)
-
     sh = pd.read_csv(os.path.join(OUT, "s1e_split_half_by_geo.csv"), index_col=0)
     sh.columns = [int(c) for c in sh.columns]
-    fig, ax = plt.subplots(figsize=(6.2, 4.2))
-    for geo in sh.index:
-        s = sh.loc[geo].dropna()
-        ax.plot(s.index, s.values, marker="o", ms=3, lw=1, color=colors[grp[geo]], alpha=0.85)
-        if grp[geo] != "high":
-            ax.text(s.index[-1] + 0.25, s.values[-1], geo, fontsize=6.5, va="center", color=colors[grp[geo]])
-    ax.text(17.6, 1.012, "7 markets with mean ICC >= 0.90", fontsize=6.5, ha="right", va="bottom", color=colors["high"])
-    ax.set_xlabel("Number of pulls averaged (k)"); ax.set_ylabel("Split-half ICC of the k-pull mean")
-    ax.set_xlim(0.5, 17.8); ax.set_ylim(-0.05, 1.03); ax.set_xticks([1, 2, 3, 5, 8, 12, 16]); fig.tight_layout()
-    fig.savefig(os.path.join(FIG, "fig3_reliability_vs_pulls_averaged.png"), dpi=300); plt.close(fig)
+    colors = {"high": "#1b7f5f", "mid": "#c25a00", "low": "#5b4b9a"}
+    markers = {"high": "o", "mid": "s", "low": "^"}
+    geo_icc = d.groupby("geo").icc_2_1.mean()
+    grp = geo_icc.apply(lambda v: "high" if v >= 0.9 else ("mid" if v >= 0.5 else "low"))
+    plt.rcParams.update({"font.family": "serif",
+                         "font.serif": ["Times New Roman", "Liberation Serif", "Nimbus Roman", "DejaVu Serif"],
+                         "font.size": 10, "axes.labelsize": 10, "xtick.labelsize": 10, "ytick.labelsize": 10,
+                         "legend.fontsize": 10, "axes.titlesize": 10, "axes.linewidth": 0.8})
+    W = 5.9  # inc = 150 mm
+    LAB = {
+        "en": {"suf": "", "dec": ".",
+               "hi": "Markets with mean ICC ≥ 0.90", "mid": "Mean ICC 0.50 to 0.90", "lo": "Mean ICC below 0.50",
+               "cut": "5 | 6 distinct values",
+               "x1": "Mean number of distinct values per pull (out of 127 months)", "y1": "ICC(2,1) of the keyword series",
+               "x2": "ICC with Travel category filter", "y2": "ICC without category filter",
+               "x3": "Number of pulls averaged (k)", "y3": "Split-half ICC of the k-pull mean",
+               "note3": "7 markets with mean ICC ≥ 0.90 lie above 0.94"},
+        "tr": {"suf": "_tr", "dec": ",",
+               "hi": "Ortalama ICC ≥ 0,90 olan pazarlar", "mid": "Ortalama ICC 0,50-0,90", "lo": "Ortalama ICC 0,50'nin altı",
+               "cut": "5 | 6 farklı değer",
+               "x1": "Çekim başına ortalama farklı değer sayısı (127 ay içinde)", "y1": "Anahtar kelime serisinin ICC(2,1) değeri",
+               "x2": "Seyahat kategorisi filtreli ICC", "y2": "Filtresiz ICC",
+               "x3": "Ortalaması alınan çekim sayısı (k)", "y3": "k çekim ortalamasının bölünmüş-yarı ICC değeri",
+               "note3": "Ortalama ICC ≥ 0,90 olan 7 pazar 0,94'ün üzerindedir"},
+    }
+    from matplotlib.ticker import FuncFormatter
+    for lang, L in LAB.items():
+        fmt = FuncFormatter(lambda v, _, dc=L["dec"]: f"{v:.1f}".replace(".", dc))
+        fmt2 = FuncFormatter(lambda v, _, dc=L["dec"]: f"{v:.2f}".replace(".", dc))
+        fig, ax = plt.subplots(figsize=(W, 4.6))
+        for gname, lab in (("high", L["hi"]), ("mid", L["mid"]), ("low", L["lo"])):
+            s_ = d2[d2.geo.map(grp) == gname]
+            ax.scatter(s_.mean_distinct, s_.icc_2_1, s=30, alpha=0.8, color=colors[gname], marker=markers[gname], label=lab, linewidths=0)
+        ax.axvline(5.5, color="grey", ls="--", lw=0.9)
+        ax.text(6.3, -0.07, L["cut"], fontsize=10, color="dimgrey")
+        ax.set_xlabel(L["x1"]); ax.set_ylabel(L["y1"])
+        ax.set_ylim(-0.12, 1.04); ax.yaxis.set_major_formatter(fmt)
+        ax.legend(frameon=False, loc="lower right", bbox_to_anchor=(1.0, 0.08))
+        fig.tight_layout()
+        fig.savefig(os.path.join(FIG, f"fig1_icc_vs_distinct_values{L['suf']}.png"), dpi=300); plt.close(fig)
+
+        fig, ax = plt.subplots(figsize=(5.2, 5.0))
+        ok = cat.dropna(subset=["icc_2_1_cat", "icc_2_1_nocat"])
+        ax.scatter(ok.icc_2_1_cat, ok.icc_2_1_nocat, s=30, color="#2b5c8a", alpha=0.8, linewidths=0)
+        ax.plot([-0.1, 1.05], [-0.1, 1.05], color="grey", lw=0.9, ls="--")
+        ax.set_xlabel(L["x2"]); ax.set_ylabel(L["y2"])
+        ax.set_xlim(-0.1, 1.05); ax.set_ylim(-0.1, 1.05); ax.set_aspect("equal")
+        ax.xaxis.set_major_formatter(fmt); ax.yaxis.set_major_formatter(fmt)
+        fig.tight_layout(); fig.savefig(os.path.join(FIG, f"fig2_filtered_vs_unfiltered_icc{L['suf']}.png"), dpi=300); plt.close(fig)
+
+        fig, ax = plt.subplots(figsize=(W, 4.8))
+        ends = []
+        for geo in sh.index:
+            s_ = sh.loc[geo].dropna()
+            ax.plot(s_.index, s_.values, marker=markers[grp[geo]], ms=3.5, lw=1.1, color=colors[grp[geo]], alpha=0.9)
+            if grp[geo] != "high":
+                ends.append([geo, s_.index[-1], s_.values[-1]])
+        ends.sort(key=lambda e: -e[2])
+        ypos = [e[2] for e in ends]
+        for i in range(1, len(ypos)):
+            if ypos[i - 1] - ypos[i] < 0.05:
+                ypos[i] = ypos[i - 1] - 0.05
+        for (geo, x, y), yl in zip(ends, ypos):
+            ax.text(x + 0.35, yl, geo, fontsize=10, va="center", color=colors[grp[geo]])
+        ax.text(16.0, 1.04, L["note3"], fontsize=10, ha="right", va="bottom", color=colors["high"])
+        ax.set_xlabel(L["x3"]); ax.set_ylabel(L["y3"])
+        ax.set_xlim(0.5, 18.6); ax.set_ylim(-0.05, 1.1); ax.set_xticks([1, 2, 3, 5, 8, 12, 16]); ax.set_yticks([0, 0.25, 0.5, 0.75, 1.0])
+        ax.yaxis.set_major_formatter(fmt2)
+        fig.tight_layout()
+        fig.savefig(os.path.join(FIG, f"fig3_reliability_vs_pulls_averaged{L['suf']}.png"), dpi=300); plt.close(fig)
 
     with open(os.path.join(OUT, "s1h_summary.txt"), "w", encoding="utf-8") as f:
         f.write("\n".join(lines + ["=" * 68]))
