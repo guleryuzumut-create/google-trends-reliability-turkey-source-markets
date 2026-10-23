@@ -31,6 +31,8 @@ FIG = "figures"
 SEED = 20261022
 rng = np.random.default_rng(SEED)
 os.makedirs(FIG, exist_ok=True)
+SUB = os.path.join(FIG, "submission")
+os.makedirs(SUB, exist_ok=True)
 
 
 def auc(score, y):
@@ -123,7 +125,7 @@ def main():
     cat = pd.read_csv(os.path.join(OUT, "s1b_category_effect_by_keyword.csv"))
     sh = pd.read_csv(os.path.join(OUT, "s1e_split_half_by_geo.csv"), index_col=0)
     sh.columns = [int(c) for c in sh.columns]
-    colors = {"high": "#1b7f5f", "mid": "#c25a00", "low": "#5b4b9a"}
+    colors = {"high": "#1b7f5f", "mid": "#b35000", "low": "#5b4b9a"}
     markers = {"high": "o", "mid": "s", "low": "^"}
     geo_icc = d.groupby("geo").icc_2_1.mean()
     grp = geo_icc.apply(lambda v: "high" if v >= 0.9 else ("mid" if v >= 0.5 else "low"))
@@ -162,7 +164,9 @@ def main():
         ax.set_ylim(-0.12, 1.04); ax.yaxis.set_major_formatter(fmt)
         ax.legend(frameon=False, loc="lower right", bbox_to_anchor=(1.0, 0.08))
         fig.tight_layout()
-        fig.savefig(os.path.join(FIG, f"fig1_icc_vs_distinct_values{L['suf']}.png"), dpi=300); plt.close(fig)
+        fig.savefig(os.path.join(FIG, f"fig1_icc_vs_distinct_values{L['suf']}.png"), dpi=300)
+        if lang == "en": fig.savefig(os.path.join(SUB, "Fig1.tif"), dpi=600, pil_kwargs={"compression": "tiff_lzw"})
+        plt.close(fig)
 
         fig, ax = plt.subplots(figsize=(5.2, 5.0))
         ok = cat.dropna(subset=["icc_2_1_cat", "icc_2_1_nocat"])
@@ -171,7 +175,9 @@ def main():
         ax.set_xlabel(L["x2"]); ax.set_ylabel(L["y2"])
         ax.set_xlim(-0.1, 1.05); ax.set_ylim(-0.1, 1.05); ax.set_aspect("equal")
         ax.xaxis.set_major_formatter(fmt); ax.yaxis.set_major_formatter(fmt)
-        fig.tight_layout(); fig.savefig(os.path.join(FIG, f"fig2_filtered_vs_unfiltered_icc{L['suf']}.png"), dpi=300); plt.close(fig)
+        fig.tight_layout(); fig.savefig(os.path.join(FIG, f"fig2_filtered_vs_unfiltered_icc{L['suf']}.png"), dpi=300)
+        if lang == "en": fig.savefig(os.path.join(SUB, "Fig2.tif"), dpi=600, pil_kwargs={"compression": "tiff_lzw"})
+        plt.close(fig)
 
         fig, ax = plt.subplots(figsize=(W, 4.8))
         ends = []
@@ -192,7 +198,14 @@ def main():
         ax.set_xlim(0.5, 18.6); ax.set_ylim(-0.05, 1.1); ax.set_xticks([1, 2, 3, 5, 8, 12, 16]); ax.set_yticks([0, 0.25, 0.5, 0.75, 1.0])
         ax.yaxis.set_major_formatter(fmt2)
         fig.tight_layout()
-        fig.savefig(os.path.join(FIG, f"fig3_reliability_vs_pulls_averaged{L['suf']}.png"), dpi=300); plt.close(fig)
+        fig.savefig(os.path.join(FIG, f"fig3_reliability_vs_pulls_averaged{L['suf']}.png"), dpi=300)
+        if lang == "en": fig.savefig(os.path.join(SUB, "Fig3.tif"), dpi=600, pil_kwargs={"compression": "tiff_lzw"})
+        plt.close(fig)
+
+    from PIL import Image
+    for n in ("Fig1", "Fig2", "Fig3"):  # Springer: RGB, 8 bit
+        pth = os.path.join(SUB, n + ".tif")
+        Image.open(pth).convert("RGB").save(pth, dpi=(600, 600), compression="tiff_lzw")
 
     with open(os.path.join(OUT, "s1h_summary.txt"), "w", encoding="utf-8") as f:
         f.write("\n".join(lines + ["=" * 68]))
